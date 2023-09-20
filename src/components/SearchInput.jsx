@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchInput = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchInput = ({ onSearch, searchTerm, setSearchTerm }) => {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -19,11 +18,11 @@ const SearchInput = ({ onSearch }) => {
         placeholder="Search..."
         value={searchTerm}
         onChange={handleChange}
-        className="border rounded-md px-2 py-1 focus:outline-none focus:border-blue-500"
+        className="px-2 py-1 border rounded-md focus:outline-none focus:border-blue-500"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white font-bold px-4 py-1 rounded-md ml-2 hover:bg-blue-700"
+        className="px-4 py-1 ml-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700"
       >
         Search
       </button>

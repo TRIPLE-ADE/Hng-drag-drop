@@ -1,19 +1,14 @@
-import { Draggable } from "react-beautiful-dnd";
+import SortableUser from "./SortableUser";
 
-const GalleryGrid = ({ data, provided }) => {
+const GalleryGrid = ({ data }) => {
   return (
-    <div {...provided.droppableProps} ref={provided.innerRef}>
-      {data.map((item, index) => (
-            <Draggable key={item.id} draggableId={item.id} index={index}>
-               {(provided) => (
-                    <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        <img src={item.img} alt={item.tag} loading="lazy" />
-                    </div>
-               )}
-            </Draggable>
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 md:grid-cols-5">
+      {data.map((item) => (
+        <SortableUser key={item.id} item={item} />
       ))}
     </div>
   );
 };
+
 
 export default GalleryGrid;
