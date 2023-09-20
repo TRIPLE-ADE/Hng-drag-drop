@@ -1,7 +1,9 @@
-const index = () => {
+const Gallery = () => {
   return (
-    <div>index</div>
+    <main className={`${styles.container} min-h-screen max-w-lg ${styles.padding} `}>
+      
+    </main>
   )
 }
 
-export default index
+export default Gallery;
