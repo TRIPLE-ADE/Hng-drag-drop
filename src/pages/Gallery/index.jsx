@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { SearchInput } from "../../components";
 import { galleryData } from "../../constants/data";
 import styles from "../../style";
-import { closestCenter, DndContext } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } from "@dnd-kit/sortable";
+import { closestCenter, DndContext, KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors} from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import GalleryGrid from "../../components/GalleryGrid";
 
   const Gallery = () => {
@@ -34,6 +38,12 @@ import GalleryGrid from "../../components/GalleryGrid";
         return arrayMove(prev, oldIndex, newIndex);     
       });
     }
+
+    const sensors = useSensors(
+      useSensor(MouseSensor),
+      useSensor(TouchSensor),
+      useSensor(KeyboardSensor),
+    );
     
   return (
     <main className={`min-h-screen ${styles.padding} `}>
@@ -41,7 +51,7 @@ import GalleryGrid from "../../components/GalleryGrid";
         <h2 className={`${styles.heading2} text-center`}>Gallery</h2>
         <p className={`${styles.paragraph} text-center`}>This is a gallery page that allows users to search for images with tags such as Movie and TV series and also drag and drop to rearrange images.</p>
         <SearchInput onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
           <SortableContext items={filteredGalleryData} strategy={verticalListSortingStrategy}>
             <GalleryGrid data={filteredGalleryData} />
           </SortableContext>
