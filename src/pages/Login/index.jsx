@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../../utils/firebase";
 import styles from "../../style";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Login = () => {
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +28,7 @@ const Login = () => {
     event.preventDefault();
     setError(null);
     setSuccessMessage(""); 
+    setLoading(true);
 
     try {
       const auth = getAuth(app);
@@ -38,6 +41,7 @@ const Login = () => {
       // User logged in successfully
       const user = userCredential.user;
 
+      setLoading(false); 
       // Display success message
       setSuccessMessage("Login successful. Redirecting...");
 
@@ -48,7 +52,27 @@ const Login = () => {
 
       console.log("User logged in:", user);
     } catch (err) {
-      setError(err.message);
+      setLoading(false);
+      const errorCode = err.message;
+      let errorMessage = "An error occurred. Please try again.";
+      console.log(errorCode);
+
+      // Map Firebase error codes to custom error messages
+      switch (errorCode) {
+        case "Firebase: Error (auth/invalid-email).":
+          errorMessage = "Invalid email address.";
+          break;
+        case "Firebase: Error (auth/user-not-found).":
+          errorMessage = "User not found. Please sign up.";
+          break;
+        case "Firebase: Error (auth/invalid-login-credentials).":
+          errorMessage = "Incorrect email or password. Please try again.";
+          break;
+        default:
+          errorMessage = "An error occurred. Please try again.";
+      }
+
+    setError(errorMessage);
     }
   };
 
@@ -81,9 +105,14 @@ const Login = () => {
             />
           </div>
           <div className={`${styles.formInputGroup}`}>
-            <button type="submit" className={`${styles.formInput} bg-blue-500 text-white font-bold hover:bg-blue-700 border-0 rounded-md p-2 outline-0`}>Login</button>
+            <button type="submit" disabled={loading} className={`${styles.formInput} bg-blue-500 text-white font-bold hover:bg-blue-700 border-0 rounded-md p-2 outline-0`}>Login</button>
           </div>
         </form>
+        {loading && (
+          <div className="text-center">
+            <Loader /> 
+          </div>
+        )}
         {error && (
           <div className="text-red-500 text-center mt-2">
             {error}
