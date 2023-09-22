@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SearchInput } from "../../components";
+import { SearchInput, GalleryGrid, Header } from "../../components";
 import { galleryData } from "../../constants/data";
 import styles from "../../style";
 import { closestCenter, DndContext, KeyboardSensor,
@@ -8,7 +8,6 @@ import { closestCenter, DndContext, KeyboardSensor,
   useSensor,
   useSensors} from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
-import GalleryGrid from "../../components/GalleryGrid";
 
   const Gallery = () => {
 
@@ -46,18 +45,20 @@ import GalleryGrid from "../../components/GalleryGrid";
     );
     
   return (
-    <main className={`min-h-screen ${styles.padding} `}>
-      <div>
-        <h2 className={`${styles.heading2} text-center`}>Gallery</h2>
-        <p className={`${styles.paragraph} text-center`}>This is a gallery page that allows users to search for images with tags such as Movie and TV series and also drag and drop to rearrange images.</p>
-        <SearchInput onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
-          <SortableContext items={filteredGalleryData} strategy={verticalListSortingStrategy}>
-            <GalleryGrid data={filteredGalleryData} />
-          </SortableContext>
-        </DndContext>
-      </div>
-    </main>
+    <>
+      <Header />
+      <main className={`min-h-screen ${styles.padding} `}>
+        <div>
+          <p className={`${styles.paragraph} text-center`}>This is a gallery page that allows users to search for images with tags such as Movie and TV series and also drag and drop to rearrange images.</p>
+          <SearchInput onSearch={handleSearch} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
+            <SortableContext items={filteredGalleryData} strategy={verticalListSortingStrategy}>
+              <GalleryGrid data={filteredGalleryData} />
+            </SortableContext>
+          </DndContext>
+        </div>
+      </main>
+    </>
   );
 };
 

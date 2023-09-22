@@ -37,10 +37,9 @@ const Login = () => {
         form.email,
         form.password
       );
-
-      // User logged in successfully
       const user = userCredential.user;
-
+      console.log("User logged in:", user);
+      
       setLoading(false); 
       // Display success message
       setSuccessMessage("Login successful. Redirecting...");
@@ -50,12 +49,10 @@ const Login = () => {
         navigate("/gallery");
       }, 1000); // Adjust the delay time (in milliseconds) as needed
 
-      console.log("User logged in:", user);
     } catch (err) {
       setLoading(false);
       const errorCode = err.message;
       let errorMessage = "An error occurred. Please try again.";
-      console.log(errorCode);
 
       // Map Firebase error codes to custom error messages
       switch (errorCode) {
