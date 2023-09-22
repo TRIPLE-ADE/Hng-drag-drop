@@ -3,7 +3,7 @@ const styles = {
     
     container: "flex flex-col items-center justify-center",
     
-    heading2: "font-poppins font-semibold xs:text-[48px] text-[40px] text-black xs:leading-[76.8px] leading-[66.8px] w-full",
+    heading2: "font-poppins font-semibold xs:text-[48px] text-[40px] text-black xs:leading-[76.8px] leading-[66.8px]",
     paragraph: "font-poppins font-normal text-dimWhite text-[18px] leading-[30.8px]",
   
     formInputGroup: "flex flex-col mb-5",
